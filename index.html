@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ballistic Studies Group Publications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a bright violet nameplate over a stratified-soil section; below it, a year rail and the record of papers, like a boring log. People pages reuse the rail for name and facts. */
+:root{
+  --violet:#57068c;        /* NYU violet */
+  --ultra:#8900e1;         /* NYU ultra violet */
+  --ink:#1d1424;
+  --muted:#6a5f72;
+  --paper:#ffffff;
+  --wash:#f5eefd;
+  --rule:#e3d8ea;
+  --on-violet:#ffffff;
+  --display:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --serif:"Newsreader", Georgia, "Times New Roman", serif;
+  color-scheme:light;
+}
+/* single light theme by request: bright NYU violets on white */
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--display);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ultra);outline-offset:2px;border-radius:4px}
+[hidden]{display:none !important}
+
+.strip{background:#57068c;color:#efe3fa;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;padding:.55rem 0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+.strip .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.hero{background:linear-gradient(135deg,#8900e1 0%,#7b00cc 55%,#6a08b0 100%);color:var(--on-violet);position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:2rem;align-items:end;padding-top:clamp(1.25rem,3vw,2rem);padding-bottom:0}
+.sitenav{grid-column:1 / -1;display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:clamp(1rem,3vw,2rem)}
+.sitenav a{color:#fff;text-decoration:none;font-weight:650;font-size:.9rem;padding:.4rem .95rem;border-radius:999px;border:1px solid rgba(255,255,255,.4)}
+.sitenav a:hover{background:rgba(255,255,255,.14)}
+.sitenav a[aria-current="page"]{background:#fff;color:#57068c;border-color:#fff}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;margin:0 0 .9rem}
+h1{margin:0;font-family:var(--display);font-stretch:125%;font-weight:800;font-size:clamp(2.1rem,6.4vw,4.6rem);line-height:.92;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
+.sub{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(1.5rem,3.4vw,2.3rem);margin:.6rem 0 0;opacity:.95}
+.lede{max-width:60ch;margin:1.1rem 0 0;color:#f6efff;font-size:1rem}
+.stats{display:flex;gap:0;margin-top:2rem;border-top:1px solid rgba(255,255,255,.3)}
+.stat{padding:1rem 1.4rem 1.3rem 0;margin-right:1.4rem;border-right:1px solid rgba(255,255,255,.3)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-stretch:110%;font-size:2rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.strata{align-self:stretch;display:flex;align-items:flex-end}
+.strata svg{width:100%;height:auto;display:block}
+
+/* toolbar */
+.tools{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--rule)}
+.tools .wrap{display:flex;flex-wrap:wrap;gap:.75rem 1.25rem;align-items:center;padding-top:.9rem;padding-bottom:.9rem}
+.search{flex:1 1 240px;position:relative}
+.search input{width:100%;font:inherit;font-size:.95rem;color:var(--ink);background:var(--wash);border:1px solid var(--rule);border-radius:999px;padding:.6rem 1rem .6rem 2.4rem}
+.search input::placeholder{color:var(--muted)}
+.search svg{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted)}
+.group{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.group-label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:.2rem}
+.chip{font:inherit;font-size:.85rem;font-weight:600;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:.38rem .8rem;cursor:pointer;display:inline-flex;gap:.4rem;align-items:center}
+.chip:hover{border-color:var(--violet)}
+.chip .n{font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"]{background:var(--violet);border-color:var(--violet);color:var(--paper)}
+.chip[aria-pressed="true"] .n{color:inherit;opacity:.8}
+
+/* record */
+main .wrap{padding-top:1.5rem;padding-bottom:4rem}
+.result-line{font-size:.85rem;color:var(--muted);margin:0 0 1rem}
+.year{display:grid;grid-template-columns:120px 1fr;gap:1.5rem;border-top:2px solid var(--ink);padding-top:1rem;margin-top:1.75rem}
+.year:first-of-type{margin-top:0}
+.year h2{margin:0;font-stretch:125%;font-weight:800;font-size:2.4rem;line-height:1;color:var(--violet);font-variant-numeric:tabular-nums;position:sticky;top:78px;align-self:start}
+.year h2 small{display:block;font-stretch:100%;font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+ol.pubs{list-style:none;margin:0;padding:0;display:grid}
+.pub{display:grid;grid-template-columns:auto 1fr;gap:.25rem 1rem;padding:1rem 0 1.1rem;border-bottom:1px solid var(--rule)}
+.pub:last-child{border-bottom:0}
+.type{grid-row:span 4;width:4.6rem;font-size:.66rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding-top:.35rem}
+.type i{display:block;height:4px;border-radius:2px;margin-bottom:.35rem;background:var(--violet)}
+.type.c i{background:repeating-linear-gradient(90deg,var(--violet) 0 6px,transparent 6px 9px)}
+.type.p i{background:repeating-linear-gradient(90deg,var(--violet) 0 2px,transparent 2px 5px)}
+.type.b i{background:linear-gradient(var(--violet) 0 1px,transparent 1px 3px,var(--violet) 3px 4px)}
+.type.o i{background:var(--rule)}
+.type span{color:var(--muted)}
+.title{margin:0;font-family:var(--serif);font-weight:500;font-size:1.18rem;line-height:1.32;text-wrap:balance;max-width:68ch}
+.authors{margin:.15rem 0 0;font-size:.9rem;color:var(--muted)}
+.authors .team{color:var(--ink);font-weight:650}
+.authors .pi{color:var(--violet);font-weight:700}
+.venue{margin:0;font-family:var(--serif);font-style:italic;font-size:.98rem;color:var(--ink)}
+.actions{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:.35rem;font-size:.82rem;font-weight:600;align-items:center}
+.actions a,.actions button{font:inherit;color:var(--violet);background:none;border:0;padding:0;cursor:pointer;text-decoration:none;border-bottom:1px solid transparent}
+.actions a:hover,.actions button:hover{border-bottom-color:currentColor}
+.actions a.pdf{background:var(--violet);color:var(--paper);padding:.15rem .6rem;border-radius:999px;border:0}
+.actions a.pdf:hover{background:var(--ultra)}
+.actions .oa{font-weight:500;font-size:.72rem;opacity:.85;margin-left:.25rem}
+mark{background:color-mix(in srgb,var(--ultra) 22%,transparent);color:inherit;border-radius:2px}
+.empty{padding:3rem 0;color:var(--muted);font-size:1rem}
+.empty button{font:inherit;color:var(--violet);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+
+/* people overview */
+.people-intro{max-width:68ch;color:var(--muted);margin:0 0 1.5rem}
+.role-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ultra);margin:0 0 .75rem}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+.card{display:grid;grid-template-columns:auto 1fr;gap:1.1rem;align-items:start;padding:1.4rem;border:1px solid var(--rule);border-radius:14px;text-decoration:none;color:inherit;background:var(--paper);transition:border-color .15s, box-shadow .15s}
+.card:hover{border-color:var(--ultra);box-shadow:0 6px 24px -12px rgba(137,0,225,.45)}
+.card.lead{grid-column:1 / -1;border-top:4px solid var(--ultra)}
+.mono{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#8900e1,#57068c);color:#fff;display:grid;place-items:center;font-stretch:115%;font-weight:800;font-size:1.35rem;letter-spacing:.02em}
+.card.lead .mono{width:112px;height:112px;font-size:1.8rem}
+.card .mono.photo,.card.lead .mono.photo{width:120px;height:120px}
+img.mono.photo{object-fit:cover;object-position:center 30%;background:#fff;border:3px solid #fff;box-shadow:0 0 0 2px var(--ultra);padding:0}
+.card h3{margin:0;font-stretch:110%;font-weight:750;font-size:1.35rem;line-height:1.15}
+.card .pos{margin:.2rem 0 0;font-size:.92rem;color:var(--muted)}
+.card .sum{margin:.7rem 0 0;font-family:var(--serif);font-size:1.05rem;line-height:1.45;max-width:65ch}
+.card .go{margin-top:.8rem;font-size:.85rem;font-weight:700;color:var(--violet)}
+.section-gap{margin-top:2rem}
+
+/* profile page */
+.back{display:inline-block;margin-bottom:1.25rem;font-size:.88rem;font-weight:650;color:var(--violet);text-decoration:none}
+.back:hover{text-decoration:underline}
+.prof-head{display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:center;padding-bottom:1.5rem;border-bottom:2px solid var(--ink)}
+.prof-head .mono{width:96px;height:96px;font-size:2rem}
+.prof-head .mono.photo{width:140px;height:140px}
+.prof-head h2{margin:0;font-stretch:120%;font-weight:800;font-size:clamp(1.8rem,4.5vw,2.8rem);line-height:1;text-wrap:balance}
+.prof-head h2 small{font-stretch:100%;font-weight:500;font-size:.45em;color:var(--muted);margin-left:.4rem;letter-spacing:.02em}
+.prof-head .pos{margin:.45rem 0 0;font-size:1rem;color:var(--muted)}
+.prof-body{display:grid;grid-template-columns:1fr 300px;gap:2.5rem;margin-top:1.75rem}
+.bio p{font-family:var(--serif);font-size:1.12rem;line-height:1.6;margin:0 0 1rem;max-width:65ch}
+.prof-body h3{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ultra);margin:2rem 0 .75rem}
+.prof-body h3:first-child{margin-top:0}
+ul.hl{margin:0;padding:0;list-style:none;display:grid;gap:.55rem}
+ul.hl li{padding-left:1.1rem;position:relative;max-width:65ch}
+ul.hl li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--ultra)}
+.facts{background:var(--wash);border-radius:14px;padding:1.25rem 1.3rem;align-self:start;position:sticky;top:1rem}
+.facts dl{margin:0;display:grid;gap:.85rem}
+.facts dt{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:.15rem 0 0;font-size:.93rem}
+.facts .links{display:grid;gap:.35rem;margin-top:.2rem}
+.facts .links a{color:var(--violet);font-weight:650;text-decoration:none;font-size:.9rem}
+.facts .links a:hover{text-decoration:underline}
+ol.media{list-style:none;margin:0;padding:0;display:grid}
+ol.media li{display:grid;grid-template-columns:140px 1fr;gap:.25rem 1rem;padding:.85rem 0;border-bottom:1px solid var(--rule)}
+ol.media li:last-child{border-bottom:0}
+.m-src{font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--ink)}
+.m-src span{display:block;font-weight:500;color:var(--muted);letter-spacing:0;font-variant-numeric:tabular-nums}
+.m-title a{font-family:var(--serif);font-size:1.06rem;line-height:1.35;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+.m-title a:hover{color:var(--violet);border-bottom-color:var(--violet)}
+.m-title p{margin:.2rem 0 0;font-size:.88rem;color:var(--muted);max-width:65ch}
+
+/* students */
+.stu-group{display:grid;grid-template-columns:120px 1fr;gap:1.5rem;border-top:2px solid var(--ink);padding-top:1rem;margin-top:1.75rem}
+.stu-group:first-of-type{margin-top:0}
+.stu-group h2{margin:0;font-stretch:115%;font-weight:800;font-size:1.25rem;line-height:1.1;color:var(--violet);position:sticky;top:1rem;align-self:start}
+.stu-group h2 small{display:block;font-stretch:100%;font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+ol.stu{list-style:none;margin:0;padding:0;display:grid}
+.stu li{display:grid;grid-template-columns:auto 1fr;gap:.2rem 1rem;padding:1rem 0 1.1rem;border-bottom:1px solid var(--rule)}
+.stu li:last-child{border-bottom:0}
+.stu .mono{width:48px;height:48px;font-size:1rem;grid-row:span 5}
+.stu h3{margin:0;font-stretch:108%;font-weight:750;font-size:1.15rem}
+.stu .deg{margin:0;font-size:.9rem;color:var(--muted)}
+.stu .deg b{color:var(--ink);font-weight:650}
+.stu .thesis{margin:.15rem 0 0;font-family:var(--serif);font-style:italic;font-size:1.02rem;max-width:68ch}
+.stu .topic{margin:.15rem 0 0;font-size:.92rem;max-width:68ch}
+.stu .now{margin:.15rem 0 0;font-size:.88rem;color:var(--muted)}
+.stu .act{display:flex;gap:.9rem;margin-top:.3rem;font-size:.82rem;font-weight:650}
+.stu .act a,.stu .act button{font:inherit;color:var(--violet);background:none;border:0;padding:0;cursor:pointer;text-decoration:none}
+.stu .act a:hover,.stu .act button:hover{text-decoration:underline}
+.badge{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--ultra);border-radius:999px;padding:.1rem .5rem;margin-left:.45rem;vertical-align:middle}
+@media (max-width:820px){.stu-group{grid-template-columns:1fr;gap:.5rem}.stu-group h2{position:static}}
+@media (max-width:480px){.stu li{grid-template-columns:1fr}.stu .mono{grid-row:auto}}
+
+footer{background:var(--wash);border-top:1px solid var(--rule);color:var(--muted);font-size:.85rem}
+footer .wrap{padding-top:1.6rem;padding-bottom:2rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
+footer b{color:var(--ink)}
+
+@media (max-width:820px){
+  .hero .wrap{grid-template-columns:1fr}
+  .strata{display:none}
+  .year{grid-template-columns:1fr;gap:.5rem}
+  .year h2{position:static}
+  .year h2 small{display:inline;margin-left:.6rem}
+  .cards{grid-template-columns:1fr}
+  .prof-body{grid-template-columns:1fr}
+  .facts{position:static}
+}
+@media (max-width:480px){
+  .pub{grid-template-columns:1fr}
+  .type{grid-row:auto;width:auto;display:flex;align-items:center;gap:.5rem}
+  .type i{width:22px;margin:0}
+  .stat{padding-right:1rem;margin-right:1rem}
+  .stat b{font-size:1.6rem}
+  .card{grid-template-columns:1fr}
+  .prof-head{grid-template-columns:1fr}
+  ol.media li{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: no-preference){
+  .trace{stroke-dasharray:6 6;animation:drift 6s linear infinite}
+  @keyframes drift{to{stroke-dashoffset:-48}}
+}
+</style>
+</head>
+<body>
+<div class="strip"><div class="wrap"><span>NYU Tandon School of Engineering</span><span>Civil &amp; Urban Engineering · Brooklyn, NY</span></div></div>
+
+<header class="hero">
+  <div class="wrap">
+    <nav class="sitenav" aria-label="Site">
+      <a href="#publications" id="nav-publications">Publications</a>
+      <a href="#pis" id="nav-people">PIs</a>
+      <a href="#students" id="nav-students">Students</a>
+    </nav>
+    <div>
+      <p class="kicker">Rapid penetration of projectiles into soil</p>
+      <h1>Ballistic Studies Group</h1>
+      <p class="sub" id="heroSub">Publications</p>
+      <p class="lede" id="heroLede"></p>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div class="strata" aria-hidden="true">
+      <svg viewBox="0 0 320 300" role="presentation">
+        <rect x="0" y="40" width="320" height="52" fill="#9a2ee8"/>
+        <rect x="0" y="92" width="320" height="64" fill="#a94ded"/>
+        <rect x="0" y="156" width="320" height="58" fill="#b96cf1"/>
+        <rect x="0" y="214" width="320" height="86" fill="#c98df5"/>
+        <g fill="#ffffff" opacity=".2">
+          <circle cx="30" cy="60" r="2"/><circle cx="90" cy="74" r="1.6"/><circle cx="250" cy="58" r="2"/><circle cx="290" cy="80" r="1.4"/>
+          <circle cx="40" cy="120" r="1.4"/><circle cx="120" cy="138" r="2"/><circle cx="270" cy="110" r="1.6"/>
+          <circle cx="60" cy="190" r="2.2"/><circle cx="220" cy="176" r="1.6"/><circle cx="300" cy="200" r="2"/>
+          <circle cx="30" cy="250" r="1.6"/><circle cx="150" cy="270" r="2"/><circle cx="260" cy="246" r="1.4"/>
+        </g>
+        <path class="trace" d="M150 0 L150 40 C150 120 156 170 172 218" fill="none" stroke="#ffffff" stroke-width="1.6" opacity=".9"/>
+        <g transform="translate(172 222) rotate(-17)">
+          <path d="M-7 -30 L7 -30 L7 -6 Q7 4 0 12 Q-7 4 -7 -6 Z" fill="#ffffff"/>
+        </g>
+        <line x1="196" y1="40" x2="196" y2="234" stroke="#ffffff" stroke-width="1" opacity=".7"/>
+        <line x1="190" y1="40" x2="202" y2="40" stroke="#ffffff" opacity=".7"/>
+        <line x1="190" y1="234" x2="202" y2="234" stroke="#ffffff" opacity=".7"/>
+        <text x="206" y="142" fill="#ffffff" font-family="Archivo, sans-serif" font-size="11" letter-spacing="1.5">DEPTH OF BURIAL</text>
+        <text x="8" y="34" fill="#ffffff" font-family="Archivo, sans-serif" font-size="10" letter-spacing="1.5" opacity=".85">GROUND SURFACE</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- Publications view -->
+<div id="view-publications">
+  <nav class="tools" aria-label="Filter publications">
+    <div class="wrap">
+      <label class="search" for="q">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="q" type="search" placeholder="Search titles, authors, venues" autocomplete="off" aria-label="Search publications">
+      </label>
+      <div class="group" id="members" role="group" aria-label="Author"><span class="group-label">Author</span></div>
+      <div class="group" id="types" role="group" aria-label="Type"><span class="group-label">Type</span></div>
+    </div>
+  </nav>
+  <main>
+    <div class="wrap">
+      <p class="result-line" id="resultLine" aria-live="polite"></p>
+      <div id="record"></div>
+    </div>
+  </main>
+</div>
+
+<!-- People view -->
+<main id="view-people" hidden>
+  <div class="wrap" id="peopleRoot"></div>
+</main>
+
+<!-- Students view -->
+<main id="view-students" hidden>
+  <div class="wrap" id="studentsRoot"></div>
+</main>
+
+<!-- Profile view -->
+<main id="view-profile" hidden>
+  <div class="wrap" id="profileRoot"></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b>Ballistic Studies Group</b> · PI: Prof. Magued Iskander · Department of Civil &amp; Urban Engineering, NYU Tandon</span>
+    <span>Compiled November 2026</span>
+  </div>
+</footer>
+
+<script>
+/* ---------- People ---------- */
+const PEOPLE = {
+  iskander:{
+    name:"Magued Iskander", post:"Ph.D., P.E., F.ASCE", initials:"MI", photo:"img/iskander.jpg", role:"Principal Investigator",
+    pos:"Professor and Chair, Department of Civil and Urban Engineering, NYU Tandon School of Engineering",
+    sum:"Geotechnical engineer who leads the group. Known for transparent soil surrogates, recycled-polymer piling and, with Stephan Bless, the rapid penetration of projectiles into sand and clay.",
+    bio:[
+      "Magued Iskander is Professor and Chair of the Department of Civil and Urban Engineering at NYU Tandon, a role he has held since 2013. He is recognized as a leader in two areas of geotechnical research: modeling soil-structure interaction and flow with transparent soil surrogates, and the behavior of piling made from recycled polymers. His other work covers foundations, rapid penetration into granular media, seismic earth pressure, offshore geotechnics and urban geotechnology.",
+      "With ballistics physicist Stephan Bless, he leads the group's SERDP-funded work on predicting how deep munitions bury themselves in soil, including saturated soils under water.",
+      "He started his career in Egypt's air force, supervising the construction of roads, runways and reinforced concrete structures. He has published more than 250 papers, including over 100 refereed journal articles, written 5 books and edited 11, and brought in more than $17 million in research funding as PI or co-PI. He has graduated 16 doctoral and 40 master's students."
+    ],
+    highlights:[
+      "Inaugural ASCE Metropolitan Section Educator of the Year Award, 2025",
+      "45th Martin S. Kapp Memorial Lecture, ASCE Metropolitan Section Geo-Institute, 2020",
+      "NYU Poly Jacobs Excellence in Education Award, 2006 and 2009",
+      "Polytechnic University Distinguished Teacher Award, 2002",
+      "Chi Epsilon James M. Robbins Excellence in Teaching Award, Metropolitan District, 2000",
+      "Past-President, ASCE Metropolitan Section Geotechnical Group",
+      "Created and teaches the ASCE Instrumentation and Monitoring Bootcamp, attended by more than 750 engineers"
+    ],
+    facts:[
+      ["Education","Ph.D., Civil (Geotechnical) Engineering, University of Texas at Austin<br>B.Sc., Civil Engineering, Alexandria University"],
+      ["Licensure","Professional Engineer in New York, New Jersey and Wisconsin"],
+      ["Book","<i>Rapid Penetration into Granular Media</i> (Elsevier, 2015), with Stephan Bless and Mehdi Omidvar"]
+    ],
+    links:[
+      ["NYU Tandon faculty page","https://engineering.nyu.edu/faculty/magued-iskander"],
+      ["Personal research wiki","https://wp.nyu.edu/iskander/"],
+      ["ResearchGate","https://www.researchgate.net/profile/Magued-Iskander"]
+    ],
+    media:[
+      {src:"CBS News",date:"Jul 7, 2026",title:"Engineering professor on why columns may have buckled in New York City building",note:"Interview on The Daily Report about buckling columns at a Midtown Manhattan high-rise.",url:"https://engineering.nyu.edu/news/engineering-professor-why-columns-may-have-buckled-new-york-city-building"},
+      {src:"ABC7 New York",date:"Jul 7, 2026",title:"Midtown high-rise's safety record under scrutiny after buckling columns discovered",note:"Explains what could cause a column to buckle during an office-to-apartment conversion.",url:"https://abc7ny.com/post/midtown-east-building-evacuated-high-rise-had-prior-violations-complaints-discovery-buckling-columns/19465786/"},
+      {src:"Reuters",date:"Jul 8, 2026",title:"Midtown Manhattan high-rise stabilized after buckling columns",note:"Quoted on why converting an existing building is more complicated than building new. Syndicated copy.",url:"https://kfgo.com/?p=1326638"},
+      {src:"NYU Tandon in the Media",date:"Jul 2026",title:"Why are the steel beams inside a Manhattan skyscraper buckling?",note:"Comments on the evacuation and possible overload.",url:"https://engineering.nyu.edu/news/why-are-steel-beams-inside-manhattan-skyscraper-buckling"},
+      {src:"CBS News New York",date:"Mar 2025",title:"New York has nearly a dozen bridges in need of risk assessment, NTSB report says",note:"On protecting bridges from vessel collisions, such as fender systems.",url:"https://www.cbsnews.com/newyork/news/ntsb-bridge-list-new-york-new-jersey"},
+      {src:"NYU Tandon News",date:"Jun 17, 2025",title:"Magued Iskander receives inaugural educator's award from the American Society of Civil Engineers",note:"",url:"https://engineering.nyu.edu/news/magued-iskander-receives-inaugural-educators-award-american-society-civil-engineers"},
+      {src:"NYU Tandon News",date:"2025",title:"Senior academic leaders at NYU Tandon earn prestigious honors in their fields",note:"",url:"https://engineering.nyu.edu/news/senior-academic-leaders-nyu-tandon-earn-prestigious-honors-their-fields"},
+      {src:"ASCE Metropolitan Section",date:"Jan 16, 2020",title:"Dr. Magued Iskander speaks at the 45th Martin S. Kapp Memorial Lecture",note:"Lecture: Lessons Learned from Visualizing Soil-Structure Interaction and Flow using Transparent Soils.",url:"https://www.ascemetsection.org/news-events/section-news/g-i-chapter/1466-dr-magued-iskander-speaks-at-the-45th-martin-s-kapp-memorial-lecture-and-16th-annual-meet-and-greet-dinner"},
+      {src:"NYU Tandon News",date:"2020",title:"Geotechnical engineering expert Magued Iskander gets “transparent” in prestigious ASCE lecture",note:"",url:"https://engineering.nyu.edu/news/geotechnical-engineering-expert-magued-iskander-gets-transparent-prestigious-asce-lecture"},
+      {src:"NYU Tandon News",date:"",title:"Leading geotechnical publication features Professor Iskander",note:"About the Pile Driver magazine feature on his 30-year career.",url:"https://engineering.nyu.edu/news/leading-geotechnical-publication-features-professor-iskander"},
+      {src:"Pile Driver magazine (PDCA)",date:"",title:"On Solid Ground",note:"Profile of his career in deep foundations.",url:"https://www.piledrivers.org/blog/?page=282"}
+    ]
+  },
+  omidvar:{
+    name:"Mehdi Omidvar", post:"Ph.D.", initials:"MO", photo:"img/omidvar.jpg", role:"Co-Principal Investigator",
+    pos:"Associate Professor of Civil and Environmental Engineering, Manhattan University",
+    sum:"Leads the Impact and Penetration Laboratory at Manhattan University. His research produced the GeoPoncelet model for penetration into sand.",
+    bio:[
+      "Mehdi Omidvar is Associate Professor of Civil and Environmental Engineering at Manhattan University, where he leads the Impact and Penetration Laboratory. His expertise is in penetration mechanics, the high-strain-rate response of granular media, risk assessment and infrastructure.",
+      "His lab runs high-speed impact experiments on granular media alongside numerical and analytical modeling, and his research led to the GeoPoncelet model for penetration into sand. He has served as PI or co-PI on more than $4.5 million in funding from the Department of Defense, the National Science Foundation and the Department of Transportation, through the University Transportation Research Center.",
+      "He earned his Ph.D. at NYU and joined Manhattan in 2015. He is a co-author of <i>Rapid Penetration into Granular Media</i> with Magued Iskander and Stephan Bless."
+    ],
+    highlights:[
+      "Inaugural ARCH Innovation Exchange Faculty Fellow, Manhattan University, 2026",
+      "Committee member, Manhattan University Center for Faculty Development",
+      "Selected as an ISSMGE SYMPG board member representing North America",
+      "USUCGER travel grant, 2012",
+      "DTRA-sponsored fellowship, NYU-Poly, 2010"
+    ],
+    facts:[
+      ["Education","Ph.D., New York University<br>B.Sc. and M.Sc., Mazandaran University, Iran"],
+      ["Lab","Impact and Penetration Laboratory, Manhattan University"],
+      ["Book","<i>Rapid Penetration into Granular Media</i> (Elsevier, 2015), with Magued Iskander and Stephan Bless"]
+    ],
+    links:[
+      ["Manhattan University faculty directory","https://manhattan.edu/academics/schools-and-departments/school-of-engineering/faculty/index.php"],
+      ["Google Scholar","https://scholar.google.com/citations?user=ozLaRxUAAAAJ&hl=en"],
+      ["NYU Tandon profile","http://engineering.nyu.edu/people/mehdi-omidvar"],
+      ["LinkedIn","https://www.linkedin.com/in/mehdi-omidvar-16659639/"]
+    ],
+    media:[
+      {src:"Manhattan University News",date:"Mar 2026",title:"Manhattan University announces inaugural ARCH Innovation Exchange Faculty Fellows",note:"Named a fellow to build a university-wide Research Collaboration Database.",url:"https://manhattan.edu/news/archive/2026/03/inaugural-arch-innovation-exchange-faculty-fellows"},
+      {src:"CLU-IN webinar (USACE M2S2)",date:"",title:"Underwater UXO: A Look into SERDP and ESTCP's Current Research",note:"Speaker, with Stephan Bless.",url:"https://www.clu-in.org/conf/tio/M2S2-UXO/"},
+      {src:"ASEE PEER",date:"2025",title:"Leveraging AI-generated supplemental videos to enhance undergraduate engineering education",note:"",url:"https://peer.asee.org/leveraging-ai-generated-supplemental-videos-to-enhance-undergraduate-engineering-education"},
+      {src:"ASEE PEER",date:"",title:"Work-in-progress: Advancing construction management education with core data analytics skills",note:"",url:"https://peer.asee.org/work-in-progress-advancing-construction-management-education-with-core-data-analytics-skills.pdf"},
+      {src:"APS March Meeting",date:"2014",title:"Velocity regimes for sphere penetration of granular materials",note:"Talk with Stephan Bless, Ivan Guzman and Magued Iskander.",url:"https://meetings-archive.aps.org/mar/2014/j17/6/"}
+    ]
+  },
+  bless:{
+    name:"Stephan Bless", post:"Sc.D.", initials:"SB", photo:"img/bless-v2.jpg", role:"Co-Principal Investigator",
+    pos:"Research Professor, Civil, Urban, and Environmental Engineering, NYU Tandon School of Engineering",
+    sum:"Impact physicist and Fellow of the American Physical Society. He led the SERDP project that established the GeoPoncelet approach to predicting UXO depth of burial.",
+    bio:[
+      "Stephan Bless is Research Professor in Civil, Urban, and Environmental Engineering at NYU Tandon and an expert in impact physics. He holds a doctorate in Earth and Planetary Sciences from MIT and has published extensively in shock wave physics, the dynamic behavior of materials and impact engineering.",
+      "From 1976 to 1991 he was Chief Scientist at the University of Dayton Research Institute Impact Physics Laboratory. From 1991 to 2012 he headed the Hypervelocity Impact Division at the Institute for Advanced Technology at the University of Texas at Austin, an Army University Affiliated Research Center, where he developed novel hypervelocity kinetic energy penetrators.",
+      "He joined NYU in 2012. He led SERDP project MR19-1277, which established the GeoPoncelet approach to predicting the depth of burial of unexploded ordnance."
+    ],
+    highlights:[
+      "Fellow, American Physical Society (Shock Compression of Condensed Matter Topical Group)",
+      "Fellow, International Ballistics Society",
+      "Led SERDP project MR19-1277 (GeoPoncelet approach to UXO depth of burial)",
+      "Head, Hypervelocity Impact Division, Institute for Advanced Technology, UT Austin, 1991 to 2012",
+      "Chief Scientist, University of Dayton Research Institute Impact Physics Laboratory, 1976 to 1991"
+    ],
+    facts:[
+      ["Education","Sc.D., Earth and Planetary Sciences, Massachusetts Institute of Technology"],
+      ["At NYU since","2012"],
+      ["Book","<i>Rapid Penetration into Granular Media</i> (Elsevier, 2015), with Magued Iskander and Mehdi Omidvar"]
+    ],
+    links:[
+      ["NYU Tandon faculty page","https://engineering.nyu.edu/faculty/stephan-bless"],
+      ["ResearchGate","https://www.researchgate.net/profile/Stephan-Bless-2"],
+      ["Academia.edu","https://nyu.academia.edu/stephanbless"],
+      ["ScienceDirect author page","https://www.sciencedirect.com/author/57207504921/stephan-j-bless"]
+    ],
+    media:[
+      {src:"CLU-IN webinar (USACE M2S2)",date:"",title:"Underwater UXO: A Look into SERDP and ESTCP's Current Research",note:"Speaker on the GeoPoncelet approach to UXO depth of burial.",url:"https://www.clu-in.org/conf/tio/M2S2-UXO/"},
+      {src:"APS Shock Compression Conference",date:"Jun 2019",title:"Rate dependence of penetration in sandy soils",note:"Talk with Mehdi Omidvar, Abdelaziz Ads and Magued Iskander, Portland, OR.",url:"https://meetings.aps.org/Meeting/SHOCK19/Session/L5.2"},
+      {src:"APS March Meeting",date:"2014",title:"Velocity regimes for sphere penetration of granular materials",note:"Talk with Mehdi Omidvar, Ivan Guzman and Magued Iskander.",url:"https://meetings-archive.aps.org/mar/2014/j17/6/"}
+    ]
+  }
+};
+/* Order set by the group: Iskander, Bless, Omidvar */
+const PEOPLE_ORDER = ["iskander","bless","omidvar"];
+
+/* ---------- Students ----------
+   Within each group, full names are ordered by first name. */
+const STUDENTS = [
+  {group:"Current students", note:"Doctoral and graduate researchers", people:[
+    {name:"Boules N. Morkos", initials:"BM", deg:"Ph.D. candidate", inst:"NYU Tandon", year:"Expected May 2027",
+     topic:"Large deformation explicit finite element (Coupled Eulerian-Lagrangian) simulations of high-speed projectile penetration into clay and sand, and probabilistic prediction of UXO depth of burial.",
+     filter:"Morkos"},
+    {name:"Joseph Dinotte", initials:"JD", deg:"Graduate researcher", inst:"NYU Tandon and Manhattan University", year:"",
+     topic:"High-speed penetration of sand measured with photonic Doppler velocimetry, CPT-informed GeoPoncelet models, layered sand and projectile instability.",
+     filter:"Dinotte"},
+    {name:"Umar Zada", initials:"UZ", deg:"Ph.D. student", inst:"NYU Abu Dhabi", year:""}
+  ]},
+  {group:"Ph.D. alumni", note:"Doctoral graduates", people:[
+    {name:"Abdelaziz Ads", initials:"AA", deg:"Ph.D.", inst:"NYU Tandon", year:"",
+     topic:"Projectile and torpedo anchor penetration into transparent clay surrogates, and high strain rate behavior of clay.",
+     now:"Tanta University, Egypt", filter:"Ads"},
+    {name:"Eduardo Suescun-Florez", initials:"ES", deg:"Ph.D.", inst:"New York University", year:"2015",
+     thesis:"A Study of Strain Rate Effects on the Mechanical Behavior of Sand"},
+    {name:"Ivan L. Guzman", initials:"IG", deg:"Ph.D.", inst:"Polytechnic Institute of NYU", year:"2014",
+     thesis:"Development of a Transparent Soil for Simulating Projectile Penetration Into Granular Materials"},
+    {name:"Mehdi Omidvar", initials:"MO", deg:"Ph.D.", inst:"NYU Polytechnic School of Engineering", year:"2015",
+     thesis:"Phenomenological Investigation of Rapid Projectile Penetration in Granular Media",
+     now:"Associate Professor, Manhattan University, and co-PI of the group", profile:"omidvar"},
+    {name:"Sophia R. Mercurio", initials:"SM", deg:"Ph.D.", inst:"NYU Tandon", year:"",
+     topic:"Rapid penetration of cohesive soils, frequency-shifted photonic Doppler velocimetry and calibration of the GeoPoncelet model for clay.",
+     filter:"Mercurio"},
+    {name:"Zhibo (Chris) Chen", initials:"ZC", deg:"Ph.D.", inst:"New York University", year:"2016",
+     thesis:"Advanced Imaging Techniques for Soil-Structure Interaction Problems",
+     topic:"Includes modeling of projectile penetration into transparent sand."}
+  ]},
+  {group:"M.S. and graduate researchers", note:"Master's and graduate contributors", people:[
+    {name:"Daniel Grace", initials:"DG", deg:"Graduate researcher", inst:"Manhattan University", year:"",
+     topic:"Built the vertical ballistics range and its photonic Doppler velocimetry instrumentation."},
+    {name:"Louis Giacomo", initials:"LG", deg:"Graduate researcher", inst:"Manhattan University", year:"",
+     topic:"Vertical compressed-gas projectile launcher, penetration of dry and partially saturated sand, and projectile instability."},
+    {name:"Rachel White", initials:"RW", deg:"M.S.", inst:"Manhattan College", year:"2021",
+     thesis:"Large deformation explicit finite element simulations of high strain rate loading and rapid penetration of clay"}
+  ]}
+];
+
+/* ---------- Publications ---------- */
+/* Group members shown in bold in author lists */
+const TEAM = ["Ads","Dinotte","Mercurio","Morkos","Zada"];
+const TYPES = {j:"Journal", c:"Conference", b:"Chapter", p:"Talk", o:"Other"};
+
+const PUBS = [
+ {y:2026,t:"c",a:["B.N. Morkos","M. Omidvar","S. Bless","M. Iskander"],ti:"Influence of geometry and mass distribution on penetrator stability in FEM simulations of rapid penetration in clay",v:"Geo-Congress 2026, ASCE, pp. 168–179",doi:"10.1061/9780784486719.017"},
+ {y:2026,t:"c",a:["J. Dinotte","M. Omidvar","S. Bless","M. Iskander"],ti:"The GeoPoncelet model for rapid penetration in soils",v:"Geo-Congress 2026, ASCE"},
+ {y:2026,t:"j",a:["J. Dinotte","A. Ads","M. Omidvar","S. Bless","M. Iskander"],ti:"Rheology of compacted kaolin clay under rapid loading",v:"Acta Geotechnica, 21, 6951–6967",doi:"10.1007/s11440-026-03168-2",f:"2026-dinotte-kaolin-rheology-acta"},
+ {y:2026,t:"j",a:["J. Dinotte","L. Giacomo","M. Omidvar","S. Bless","M. Iskander"],ti:"Projectile instability during rapid sand penetration and implications for depth of burial predictions",v:"International Journal of Impact Engineering, 209, 105511",doi:"10.1016/j.ijimpeng.2025.105511",f:"2026-dinotte-instability-ijie"},
+ {y:2025,t:"j",a:["B.N. Morkos","R. White","M. Omidvar","M. Iskander"],ti:"Calibration of empirical penetration models using large deformation explicit finite element simulations of rapid penetration in clay",v:"Defence Technology, 50, 20–35",doi:"10.1016/j.dt.2025.03.021",f:"2025-morkos-defence-technology"},
+ {y:2025,t:"j",a:["B.N. Morkos","M. Iskander","M. Omidvar"],ti:"From battlefield to building site: Probabilistic analysis of UXO penetration depth for infrastructure resilience",v:"Applied Sciences, 15(6), 3259",doi:"10.3390/app15063259",f:"2025-morkos-applied-sciences"},
+ {y:2025,t:"j",a:["J. Dinotte","M. Omidvar","S. Bless","M. Iskander"],ti:"CPT-informed model for rapid penetration into sand",v:"Canadian Geotechnical Journal, 62, 1–14",doi:"10.1139/cgj-2024-0581",f:"2025-dinotte-cpt-informed-cgj",fl:"Manuscript"},
+ {y:2025,t:"j",a:["M. Omidvar","J. Dinotte","L. Giacomo","S. Bless","M. Iskander"],ti:"Prediction of high-speed penetration in layered sand using cone penetration tests",v:"Journal of Geotechnical and Geoenvironmental Engineering, 151(1), 04024148",doi:"10.1061/JGGEFK.GTENG-12760",f:"2025-omidvar-layered-sand-jgge"},
+ {y:2025,t:"j",a:["S.R. Mercurio","M. Iskander","M. Omidvar","S. Bless"],ti:"Calibration of the GeoPoncelet penetration model for conical rod projectiles in cohesive soils",v:"Journal of Geotechnical and Geoenvironmental Engineering, 151(7), 04025064",doi:"10.1061/JGGEFK.GTENG-13286",f:"2025-mercurio-geoponcelet-jgge"},
+ {y:2025,t:"j",a:["S.R. Mercurio","M. Iskander","S. Bless","M. Omidvar"],ti:"Deceleration of projectiles in sand",v:"Acta Geotechnica, 20, 519–541",doi:"10.1007/s11440-024-02408-7",f:"2025-mercurio-deceleration-acta"},
+ {y:2025,t:"j",a:["A. Ads","J. Dinotte","M. Omidvar","S. Bless","M. Iskander"],ti:"Influence of high-strain rate on the shear strength of normally consolidated kaolin clay",v:"Acta Geotechnica, 20, 4183–4197",doi:"10.1007/s11440-025-02633-8",f:"2025-ads-kaolin-strain-rate-acta"},
+ {y:2025,t:"j",a:["J.T. Dinotte","M. Iskander","A. Ads","S. Bless","M. Omidvar"],ti:"Use of hydraulic systems for high-rate compression testing",v:"Experimental Techniques, 50, 341–348",doi:"10.1007/s40799-025-00802-8",f:"2025-dinotte-hydraulic-exp-tech"},
+ {y:2024,t:"j",a:["M. Omidvar","J. Dinotte","L. Giacomo","S. Bless","M. Iskander"],ti:"Photon Doppler velocimetry for resolving vertical penetration into sand targets",v:"International Journal of Impact Engineering, 185, 104827",f:"2024-omidvar-pdv-ijie"},
+ {y:2024,t:"j",a:["M. Omidvar","J. Dinotte","L. Giacomo","S. Bless","M. Iskander"],ti:"Dynamics of sand response to rapid penetration by rigid projectiles",v:"Granular Matter, 26, 73",doi:"10.1007/s10035-024-01440-4",f:"2024-omidvar-sand-response-granular-matter"},
+ {y:2024,t:"j",a:["S. Mercurio","D. Grace","S. Bless","M. Iskander","M. Omidvar"],ti:"Frequency-shifted photonic Doppler velocimetry (PDV) for measuring deceleration of projectiles in soils",v:"Acta Geotechnica, 19, 2467–2485",doi:"10.1007/s11440-024-02252-9",f:"2024-mercurio-fs-pdv-acta"},
+ {y:2024,t:"j",a:["A. Ads","M. Iskander","S. Bless","M. Omidvar"],ti:"Effect of fin width on torpedo anchor penetration and pullout using model tests with transparent soils",v:"Ocean Engineering, 298, 117247",f:"2024-ads-fin-width-ocean-eng"},
+ {y:2024,t:"j",a:["L. Giacomo","D. Grace","M. Omidvar","S. Bless","M. Iskander"],ti:"Vertical projectile launcher for study of rapid penetration into soil targets",v:"Experimental Techniques, 48, 1077–1092",doi:"10.1007/s40799-024-00732-x",f:"2024-giacomo-vertical-launcher-exp-tech"},
+ {y:2024,t:"c",a:["B.N. Morkos","R. White","M. Omidvar","M. Iskander","S. Bless"],ti:"Numerical simulation of high-speed penetration of munitions in clay",v:"Geo-Congress 2024, GSP 352, ASCE, pp. 82–91",doi:"10.1061/9780784485347.009",f:"2024-morkos-munitions-clay-gsp"},
+ {y:2024,t:"c",a:["A. Ads","M. Iskander","S. Bless","M. Omidvar"],ti:"High strain rate effects on a clayey sand mixture",v:"Geo-Congress 2024, GSP 349, ASCE, pp. 192–201",doi:"10.1061/9780784485316.021",f:"2024-ads-clayey-sand-gsp"},
+ {y:2024,t:"c",a:["L. Giacomo","J. Dinotte","M. Omidvar","S. Bless","M. Iskander"],ti:"An investigation of projectile instability during ballistic penetration into sandy soils",v:"SEM 2024 Annual Conference and Exposition"},
+ {y:2024,t:"c",a:["J. Dinotte","M. Omidvar","S. Bless","M. Iskander"],ti:"High-speed ordnance penetration into stratified sandy soils",v:"Dynamic Behavior of Materials, Vol. 1, SEM 2024, pp. 47–54",f:"2024-dinotte-stratified-sem"},
+ {y:2023,t:"c",a:["S.R. Mercurio","S. Bless","A. Ads","M. Omidvar","M. Iskander"],ti:"Rate dependence of penetration resistance in a cohesive soil",v:"Dynamic Behavior of Materials, Vol. 1, SEM 2023, pp. 23–31",doi:"10.1007/978-3-031-50646-8_4",f:"2023-mercurio-rate-dependence-sem"},
+ {y:2023,t:"c",a:["J. Dinotte","L. Giacomo","S. Bless","M. Iskander","M. Omidvar"],ti:"Nose shape effects from projectile impact and deep penetration in dry sand",v:"Dynamic Behavior of Materials, Vol. 1, SEM 2023, pp. 49–59",f:"2023-dinotte-nose-shape-sem"},
+ {y:2023,t:"c",a:["S. Mercurio","D. Grace","S. Bless","M. Iskander","M. Omidvar"],ti:"Heterodyne photonic Doppler velocimetry (PDV) for measuring deceleration of projectiles in soils",v:"SEM 2023 Annual Conference and Exposition"},
+ {y:2023,t:"j",a:["A. Ads","S. Bless","M. Iskander"],ti:"Shape effects on penetration of dynamically installed anchors in a transparent marine clay surrogate",v:"Acta Geotechnica, 18, 3043–3059",doi:"10.1007/s11440-022-01750-y",f:"2023-ads-anchor-shape-acta"},
+ {y:2023,t:"j",a:["A. Ads","M. Iskander","G. Pippin"],ti:"Lessons in geomechanics of deep foundations from nature",v:"Acta Geotechnica"},
+ {y:2023,t:"j",a:["A. Ads","M.D. Islam","M. Iskander"],ti:"Longitudinal settlements during tunneling in soft clay, using transparent soil models",v:"Tunnelling and Underground Space Technology, 136, 105042"},
+ {y:2022,t:"j",a:["G. Xu","M. Iskander","A. Ads","H. Jing"],ti:"Visualizing the effect of excavation rate on rock deformation and fracturing of tunnels using a transparent soft rock surrogate",v:"Acta Geotechnica, 17(5)"},
+ {y:2022,t:"c",a:["S. Bless","S.R. Mercurio","M. Iskander","J. Mathis"],ti:"Measurement of cone-cylinder deceleration in sand",v:"Dynamic Behavior of Materials, Vol. 1, SEM 2022, pp. 29–37",f:"2022-bless-cone-cylinder-sem"},
+ {y:2022,t:"c",a:["D. Grace","S. Mercurio","M. Omidvar","S. Bless","M. Iskander"],ti:"A vertical ballistics range with photon Doppler velocimeter instrumentation for projectile penetration testing in soils",v:"Dynamic Behavior of Materials, Vol. 1, SEM 2022, pp. 93–100",f:"2022-grace-vertical-range-sem"},
+ {y:2022,t:"c",a:["R. White","M. Omidvar","A. Ads","S. Bless","M. Iskander"],ti:"Large deformation explicit finite element simulations of drop tower experiments on clay",v:"Dynamic Behavior of Materials, Vol. 1, SEM 2022, pp. 101–108",doi:"10.1007/978-3-031-17453-7_15",f:"2022-white-drop-tower-sem"},
+ {y:2021,t:"j",a:["I.L. Guzman","M. Iskander","S. Bless"],ti:"Visualization of impact cratering in granular media using quarter space penetration tests",v:"Granular Matter, 23, 63",doi:"10.1007/s10035-021-01131-4",f:"2021-guzman-cratering-granular-matter"},
+ {y:2021,t:"j",a:["A. Ads","M.D. Islam","M. Iskander"],ti:"Effect of face losses and overburden pressure ratio on tunnelling induced settlements in soft clay, using transparent soil models",v:"Geotechnical and Geological Engineering"},
+ {y:2021,t:"c",a:["P. Poudel","A. Ads","M. Iskander"],ti:"Soil-structure interaction of under-reamed piles",v:"IFCEE 2021, GSP 323, ASCE, pp. 330–339"},
+ {y:2021,t:"c",a:["G. Pippin","A. Ads","M. Iskander"],ti:"Learning foundation engineering from nature",v:"IFCEE 2021, GSP 323, ASCE, pp. 282–292"},
+ {y:2020,t:"j",a:["A. Ads","M. Iskander","S. Bless","M. Omidvar"],ti:"Visualizing the effect of fin length on torpedo anchor penetration and pullout using a transparent soil",v:"Ocean Engineering, 216, 108021",f:"2020-ads-fin-length-ocean-eng"},
+ {y:2020,t:"j",a:["A. Ads","M. Iskander","S. Bless"],ti:"Soil-projectile interaction during penetration of a transparent clay simulant",v:"Acta Geotechnica, 15, 815–826",doi:"10.1007/s11440-020-00921-z",f:"2020-ads-transparent-clay-acta"},
+ {y:2020,t:"j",a:["A. Ads","M. Iskander","S. Bless"],ti:"Shear strength of a synthetic transparent soft clay using a miniature ball penetrometer (MBP) test",v:"Geotechnical Testing Journal, 43(5)",doi:"10.1520/GTJ20190020",f:"2020-ads-mbp-gtj"},
+ {y:2020,t:"c",a:["A. Ads","M. Omidvar","S. Bless","M. Iskander"],ti:"Static and dynamic analysis of torpedo anchor penetration and pullout in cohesive soils",v:"Geo-Congress 2020, GSP 317, ASCE, pp. 283–292",doi:"10.1061/9780784482803.031",f:"2020-ads-torpedo-static-dynamic-gsp"},
+ {y:2020,t:"c",a:["A. Ads","M. Iskander","A. Nazir"],ti:"3D ground movements due to tunnel face collapse",v:"Geo-Congress 2020, GSP 316, ASCE"},
+ {y:2020,t:"c",a:["G. Pippin","A. Ads","M. Iskander"],ti:"Influence of footing shape on the bearing capacity of soft clay",v:"Geo-Congress 2020, GSP 315, ASCE, pp. 379–388"},
+ {y:2020,t:"c",a:["A. Ads","M. Omidvar","S. Bless","M. Iskander"],ti:"Effect of fin shape on the penetration and pullout of torpedo anchors in marine clays",v:"ISFOG 2020, DFI, pp. 332–341"},
+ {y:2020,t:"c",a:["S. Bless","A. Ads","M. Iskander","M. Omidvar"],ti:"Impact and penetration of a transparent cohesive soil",v:"AIP Conference Proceedings, 2272, 120002",doi:"10.1063/12.0000896",f:"2020-bless-transparent-cohesive-aip"},
+ {y:2020,t:"c",a:["S. Bless","M. Omidvar","M. Iskander","A. Ads"],ti:"Rate dependent penetration of dry sand",v:"AIP Conference Proceedings, 2272, 110001",doi:"10.1063/12.0000897",f:"2020-bless-rate-dependent-dry-sand-aip"},
+ {y:2020,t:"c",a:["B. Kenneally","M. Omidvar","S. Bless","M. Iskander"],ti:"Observations of velocity-dependent drag and bearing stress in sand penetration",v:"Dynamic Behavior of Materials, Vol. 1, SEM 2020, pp. 29–35",f:"2020-kenneally-drag-bearing-sem"},
+ {y:2020,t:"o",a:["I.L. Guzman","M. Iskander","S. Bless"],ti:"A comparison of half and quarter space penetration into granular media",v:"CUNY Academic Works, New York City College of Technology",url:"https://academicworks.cuny.edu/ny_pubs/767",f:"2020-guzman-half-quarter-space"},
+ {y:2019,t:"b",a:["M. Omidvar","S. Bless","M. Iskander"],ti:"Recent insights into penetration of sand and similar granular materials",v:"In T.J. Vogler and D.A. Fredenburg (eds.), Shock Phenomena in Granular and Porous Materials, Springer, pp. 137–163",doi:"10.1007/978-3-030-23002-9",f:"2019-omidvar-recent-insights-chapter"},
+ {y:2019,t:"c",a:["A. Ads","M. Omidvar","S. Bless","M. Iskander"],ti:"Visualization of torpedo pile penetration and pullout in transparent synthetic soil representative of soft marine clays",v:"Geo-Congress 2019, GSP 307, ASCE, pp. 387–397",doi:"10.1061/9780784482094.035",f:"2019-ads-torpedo-pile-gsp"},
+ {y:2019,t:"p",a:["S. Bless","M. Omidvar","A. Ads","M. Iskander"],ti:"Rate dependence of penetration in sandy soils",v:"APS Topical Conference on Shock Compression of Condensed Matter, Portland, OR",url:"https://meetings.aps.org/Meeting/SHOCK19/Session/L5.2"},
+ {y:2018,t:"c",a:["S.J. Bless","M. Omidvar","M. Iskander"],ti:"Poncelet coefficients for dry sand",v:"AIP Conference Proceedings, 1979, 110001",doi:"10.1063/1.5044920",f:"2018-bless-poncelet-coefficients-aip"},
+ {y:2018,t:"p",a:["A. Ads","S. Bless","M. Iskander"],ti:"Projectile penetration into a synthetic clay",v:"Mach Conference 2018, Annapolis, MD"},
+ {y:2017,t:"c",a:["M. Omidvar","M. Iskander"],ti:"Soil deformations during finless torpedo installation",v:"Geotechnical Frontiers 2017, GSP 280, ASCE, pp. 389–397",doi:"10.1061/9780784480472.041",f:"2017-omidvar-finless-torpedo-gsp"}
+].filter(p => p.f);
+
+/* Author filters: every author on the listed papers, by last name, alphabetical */
+const lastName = n => n.split(" ").slice(-1)[0];
+const MEMBERS = [...new Set(PUBS.flatMap(p => p.a.map(lastName)))]
+  .sort((a,b) => a.localeCompare(b))
+  .map(k => ({key:k, full:k}));
+
+const state = {q:"", members:new Set(), type:"all"};
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const memberOf = name => TEAM.includes(lastName(name));
+const has = (p, key) => p.a.some(n => n.endsWith(" " + key));
+
+function hl(text){
+  const s = esc(text);
+  if(!state.q) return s;
+  const q = state.q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return s.replace(new RegExp("(" + esc(q) + ")", "gi"), "<mark>$1</mark>");
+}
+function authorHTML(p){
+  return p.a.map(n => {
+    const cls = n.endsWith("Iskander") ? "pi" : (memberOf(n) ? "team" : "");
+    return cls ? `<span class="${cls}">${hl(n)}</span>` : hl(n);
+  }).join(", ");
+}
+function citation(p){
+  return `${p.a.join(", ")} (${p.y}). ${p.ti}. ${p.v}.` + (p.doi ? ` https://doi.org/${p.doi}` : "");
+}
+function matches(p){
+  if(state.type !== "all" && p.t !== state.type) return false;
+  if(state.members.size && ![...state.members].some(k => has(p,k))) return false;
+  if(state.q){
+    const hay = (p.ti + " " + p.a.join(" ") + " " + p.v + " " + p.y).toLowerCase();
+    if(!hay.includes(state.q.toLowerCase())) return false;
+  }
+  return true;
+}
+
+function renderStats(){
+  const j = PUBS.filter(p => p.t==="j").length;
+  const years = PUBS.map(p => p.y);
+  $("#stats").innerHTML =
+    `<div class="stat"><b>${PUBS.length}</b><span>Publications</span></div>` +
+    `<div class="stat"><b>${j}</b><span>Journal articles</span></div>` +
+    `<div class="stat"><b>${Math.min(...years)}–${String(Math.max(...years)).slice(2)}</b><span>Years</span></div>`;
+}
+
+function renderChips(){
+  const m = $("#members");
+  MEMBERS.forEach(mem => {
+    const b = document.createElement("button");
+    b.className = "chip"; b.type = "button"; b.id = "m-" + mem.key;
+    b.setAttribute("aria-pressed","false");
+    b.title = mem.full;
+    b.innerHTML = `${mem.key} <span class="n">${PUBS.filter(p => has(p, mem.key)).length}</span>`;
+    b.addEventListener("click", () => {
+      state.members.has(mem.key) ? state.members.delete(mem.key) : state.members.add(mem.key);
+      b.setAttribute("aria-pressed", state.members.has(mem.key));
+      render();
+    });
+    m.appendChild(b);
+  });
+  const t = $("#types");
+  [["all","All"],["j","Journal"],["c","Conference"],["b","Chapters"],["p","Talks"],["o","Other"]].forEach(([k,label]) => {
+    const b = document.createElement("button");
+    b.className = "chip"; b.type = "button"; b.id = "t-" + k;
+    b.setAttribute("aria-pressed", k==="all");
+    const n = k==="all" ? PUBS.length : PUBS.filter(p => p.t===k).length;
+    b.innerHTML = `${label} <span class="n">${n}</span>`;
+    b.addEventListener("click", () => {
+      state.type = k;
+      t.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c===b));
+      render();
+    });
+    t.appendChild(b);
+  });
+}
+
+function render(){
+  const list = PUBS.filter(matches);
+  const filtered = list.length !== PUBS.length;
+  $("#resultLine").textContent = filtered ? `Showing ${list.length} of ${PUBS.length} publications` : "";
+  $("#resultLine").hidden = !filtered;
+  if(!list.length){
+    $("#record").innerHTML = `<div class="empty">No publications match these filters. <button type="button" id="reset">Clear filters</button></div>`;
+    $("#reset").addEventListener("click", reset);
+    return;
+  }
+  const byYear = {};
+  list.forEach(p => (byYear[p.y] ||= []).push(p));
+  $("#record").innerHTML = Object.keys(byYear).sort((a,b) => b-a).map(y => `
+    <section class="year" aria-labelledby="y${y}">
+      <h2 id="y${y}">${y}<small>${byYear[y].length} item${byYear[y].length>1?"s":""}</small></h2>
+      <ol class="pubs">${byYear[y].map(p => {
+        const i = PUBS.indexOf(p);
+        const pdf = p.f ? `<a class="pdf" href="papers/${p.f}.pdf" target="_blank" rel="noopener">PDF ↓${p.fl ? ` <span class="oa">${p.fl}</span>` : ""}</a>` : "";
+        const link = p.doi ? `<a href="https://doi.org/${p.doi}" target="_blank" rel="noopener">DOI ↗</a>`
+                   : p.url ? `<a href="${p.url}" target="_blank" rel="noopener">Abstract ↗</a>` : "";
+        return `<li class="pub">
+          <div class="type ${p.t}"><i></i><span>${TYPES[p.t]}</span></div>
+          <h3 class="title">${hl(p.ti)}</h3>
+          <p class="authors">${authorHTML(p)}</p>
+          <p class="venue">${hl(p.v)}</p>
+          <div class="actions">${pdf}${link}<button type="button" data-cite="${i}">Copy citation</button></div>
+        </li>`;}).join("")}</ol>
+    </section>`).join("");
+}
+
+function reset(){
+  state.q = ""; state.type = "all"; state.members.clear();
+  $("#q").value = "";
+  document.querySelectorAll("#members .chip").forEach(c => c.setAttribute("aria-pressed","false"));
+  document.querySelectorAll("#types .chip").forEach(c => c.setAttribute("aria-pressed", c.id==="t-all"));
+  render();
+}
+
+/* ---------- People rendering ---------- */
+function avatar(p){
+  return p.photo
+    ? `<img class="mono photo" src="${p.photo}" alt="Portrait of ${esc(p.name)}" width="480" height="480">`
+    : `<div class="mono" aria-hidden="true">${p.initials}</div>`;
+}
+function renderPeople(){
+  const card = (k, lead) => {
+    const p = PEOPLE[k];
+    return `<a class="card${lead?" lead":""}" href="#${k}">
+      ${avatar(p)}
+      <div>
+        <p class="role-label">${p.role}</p>
+        <h3>${p.name}</h3>
+        <p class="pos">${p.pos}</p>
+        <p class="sum">${p.sum}</p>
+        <div class="go">View profile and media →</div>
+      </div>
+    </a>`;
+  };
+  $("#peopleRoot").innerHTML = `
+    <div class="cards">${card(PEOPLE_ORDER[0], true)}</div>
+    <div class="cards section-gap">${PEOPLE_ORDER.slice(1).map(k => card(k)).join("")}</div>`;
+}
+
+function renderProfile(k){
+  const p = PEOPLE[k];
+  const media = p.media.map(m => `<li>
+      <div class="m-src">${esc(m.src)}${m.date ? `<span>${esc(m.date)}</span>` : ""}</div>
+      <div class="m-title"><a href="${m.url}" target="_blank" rel="noopener">${esc(m.title)} ↗</a>${m.note ? `<p>${esc(m.note)}</p>` : ""}</div>
+    </li>`).join("");
+  $("#profileRoot").innerHTML = `
+    <a class="back" href="#pis">← All PIs</a>
+    <div class="prof-head">
+      ${avatar(p)}
+      <div>
+        <p class="role-label">${p.role}</p>
+        <h2>${p.name}<small>${p.post}</small></h2>
+        <p class="pos">${p.pos}</p>
+      </div>
+    </div>
+    <div class="prof-body">
+      <div>
+        <h3>Biography</h3>
+        <div class="bio">${p.bio.map(t => `<p>${t}</p>`).join("")}</div>
+        <h3>Highlights</h3>
+        <ul class="hl">${p.highlights.map(h => `<li>${esc(h)}</li>`).join("")}</ul>
+        <h3>In the news, media and talks</h3>
+        <ol class="media">${media}</ol>
+      </div>
+      <aside class="facts" aria-label="At a glance">
+        <dl>
+          ${p.facts.map(([dt,dd]) => `<div><dt>${dt}</dt><dd>${dd}</dd></div>`).join("")}
+          <div><dt>Profiles</dt><dd class="links">${p.links.map(([l,u]) => `<a href="${u}" target="_blank" rel="noopener">${l} ↗</a>`).join("")}</dd></div>
+        </dl>
+      </aside>
+    </div>`;
+}
+
+function renderStudents(){
+  const count = STUDENTS.reduce((n,g) => n + g.people.length, 0);
+  $("#studentsRoot").innerHTML = `
+    ${STUDENTS.map(g => `
+      <section class="stu-group">
+        <h2>${g.group}<small>${g.people.length} ${g.people.length>1?"people":"person"}</small></h2>
+        <ol class="stu">${g.people.map(s => `
+          <li>
+            ${s.profile ? avatar(PEOPLE[s.profile]) : `<div class="mono" aria-hidden="true">${s.initials}</div>`}
+            <h3>${esc(s.name)}${g.group.startsWith("Current") ? '<span class="badge">Current</span>' : ""}</h3>
+            <p class="deg"><b>${esc(s.deg)}</b> · ${esc(s.inst)}${s.year ? ` · ${esc(s.year)}` : ""}</p>
+            ${s.thesis ? `<p class="thesis">${esc(s.thesis)}</p>` : ""}
+            ${s.topic ? `<p class="topic">${esc(s.topic)}</p>` : ""}
+            ${s.now ? `<p class="now">Now: ${esc(s.now)}</p>` : ""}
+            ${(s.filter || s.profile) ? `<div class="act">
+              ${s.filter ? `<button type="button" data-filter="${s.filter}">See publications (${PUBS.filter(p => has(p, s.filter)).length}) →</button>` : ""}
+              ${s.profile ? `<a href="#${s.profile}">View profile →</a>` : ""}
+            </div>` : ""}
+          </li>`).join("")}
+        </ol>
+      </section>`).join("")}`;
+}
+
+/* jump from a student to their filtered publications */
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-filter]");
+  if(!b) return;
+  const key = b.dataset.filter;
+  reset();
+  state.members.add(key);
+  const chip = document.getElementById("m-" + key);
+  if(chip) chip.setAttribute("aria-pressed","true");
+  render();
+  location.hash = "publications";
+});
+
+/* ---------- Router ---------- */
+const LEDES = {
+  publications:"Journal articles, conference papers and talks by Prof. Magued Iskander with group members Abdelaziz Ads, Boules Morkos, Joseph Dinotte and Sophia Mercurio. The topics are high-speed penetration into clay and sand, photonic Doppler velocimetry, transparent soils and torpedo anchors.",
+  people:"The principal investigator and co-principal investigators who lead the group's research on rapid penetration into soils.",
+  students:"Doctoral and master's students, past and present, who carried out the group's experiments, simulations and models."
+};
+function route(){
+  const h = (location.hash || "").replace("#","");
+  const isProfile = PEOPLE[h] !== undefined;
+  const view = isProfile ? "profile" : ((h === "pis" || h === "people") ? "people" : h === "students" ? "students" : "publications");
+  ["publications","people","students","profile"].forEach(v => { $("#view-" + v).hidden = view !== v; });
+  const navOn = view === "profile" ? "people" : view;
+  ["publications","people","students"].forEach(v => {
+    const a = $("#nav-" + v);
+    if(v === navOn) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");
+  });
+  const titles = {publications:"Publications", people:"PIs", students:"Students"};
+  $("#heroSub").textContent = isProfile ? PEOPLE[h].name : titles[view];
+  $("#heroLede").textContent = isProfile ? PEOPLE[h].pos : "";
+  $("#heroLede").hidden = !isProfile;
+  $("#stats").hidden = view !== "publications";
+  if(view === "people") renderPeople();
+  if(view === "students") renderStudents();
+  if(isProfile) renderProfile(h);
+  document.title = view === "publications" ? "Ballistic Studies Group Publications"
+    : (isProfile ? PEOPLE[h].name : titles[view]) + " · Ballistic Studies Group";
+}
+
+$("#record").addEventListener("click", async e => {
+  const b = e.target.closest("[data-cite]");
+  if(!b) return;
+  const text = citation(PUBS[+b.dataset.cite]);
+  try{ await navigator.clipboard.writeText(text); b.textContent = "Copied"; }
+  catch(err){ b.textContent = "Copy blocked: select the text instead"; }
+  setTimeout(() => { b.textContent = "Copy citation"; }, 1800);
+});
+$("#q").addEventListener("input", e => { state.q = e.target.value.trim(); render(); });
+window.addEventListener("hashchange", () => { route(); window.scrollTo(0,0); });
+
+renderStats(); renderChips(); render(); route();
+</script>
+</body>
+</html>
